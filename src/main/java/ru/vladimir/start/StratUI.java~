@@ -1,9 +1,0 @@
-package ru.vladimir.start;
-import ru.vladimir.models.*;
-
-public class StartUI{
-  public static void main(String[] args){
-    Tracker tracker = new Tracker();
-    tracker.items[0] = null;
-  }
-}
