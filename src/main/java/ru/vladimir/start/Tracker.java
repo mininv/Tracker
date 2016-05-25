@@ -9,7 +9,7 @@ import java.lang.ref.Reference;
 //  - этот класс хранилище заявок
 
 public class Tracker {
-  private Item[] items = new Item[2];
+  private Item[] items = new Item[10];
   private int position = 0;// иницилизаяция поля
   private static final Random RN = new Random();//метод в пакете java.utils.*, static final - указывают на константу
   Item t;// переменная необходимая для работы метода сортировфки по Алфавитному принципу
@@ -38,99 +38,78 @@ public class Tracker {
     }    
     return result;
   }
-  public Item redact(Item item){// метод для редактирования заявки
-    System.out.println("Введите новое значение поля name: ");
-    try{BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-      String s = reader.readLine();
-      if (s.length()!= 0){//проверка, что был получен вводный файл, если строка равна нулю, то поле остается неизменным.
-        item.name = s;
-      } else item.name = item.name;
-      String b= reader.readLine();
-      if (b.length()!= 0){
-        item.description = b;
-      } else  item.description = item.description;
-    } catch (IOException e){
-        System.out.println("упс");
+  public void redact(String id){// метод для редактирования заявки по ее id
+    for (Item item : items){
+      if (item != null && item.getId().equals(id)){
+        item.name = "New new";
+        item.description = "Wot tak";
+        item.create = 11102014;
+        break;
       }
-    return item;
+    }
   }
-  public Item delete(Item item){//метод, удаляющий заявку
-    item.name = "";
-    item.description = "";
-    item.create= 0;
-    return item;
+  public void delete(String id){//метод, удаляющий заявку
+    for (Item item : items){
+      if (item != null && item.getId().equals(id)){
+        item.name = null;
+        item.description = null;
+        item.create = 00000000;
+        item.setId("");
+        break;
+      }
+    }
   }
-  public void listing(){//метод для вывода на клан всех заявок
+  public void listing(){//метод для вывода на эклан всех заявок
     int x =1;
     for (Item item: items){
       if (item == null){
         break;
       }
-      System.out.print("Заявка номер: " + x++ +".");System.out.println(" Name - " + item.getName()+ ", Desc: " + item.getDescription() + ", Id: " + item.getId() + ", data: " + item.getCreate());
+      if (item.getId()!= null) System.out.print("Заявка номер: " + x++ +".");System.out.println(" Name - " + item.getName()+ ", Desc: " +
+       item.getDescription() + ", Id: " + item.getId() + ", data: " + item.getCreate());
     }
   }
-  public void filter(){//метод для вывода фильтра на экран
-    System.out.println("Список всех заявок: ");    
-    listing();
-    System.out.println("Для формотирования спаска заявок выберите один из вариантов фильтра. "); 
-    System.out.println("1. Вывести заявки в алфавитном порядке имен.");
-    System.out.println("2. Вывести заявку с определенным именем.");
-    System.out.println("3. Вывести заявки с определенной даты.");
-    System.out.println("Для выбора фильтра введите число(1-3) соответствующее необходимому фильтру:");
-    try{
-      BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-      int i= Integer.parseInt(reader.readLine());
-        if (i == 1){alfavit();}
-        if (i == 2){searchByName();}
-        if (i == 3){searchBycreate();}
-    }catch (IOException e){
-       System.out.println("упс");
-     }
-
-  } 
   public void alfavit(){//метод реализующий расстановку по алфавитному принципу
-    for (int a = 1; a < items.length; a++){
-      for (int b = items.length - 1; b >= a; b--){
-        if (items[b]== null ){break;}
-        if (items[b - 1].name.charAt(0) > items[b].name.charAt(0)){
+    for (int a = 1; a < this.position; a++){
+      for (int b = this.position - 1; b >= a; b--){
+        if (items[b - 1].name==null & items[b].name != null){ 
           t = items[b - 1];
           items[b - 1] = items[b];
           items[b] = t;
         }
+        else if (items[b - 1].name!=null & items[b].name != null){
+          if (items[b - 1].name.charAt(0) > items[b].name.charAt(0)){
+            t = items[b - 1];
+            items[b - 1] = items[b];
+            items[b] = t;
+          } 
+        }
+        else if (items[b - 1].name!=null & items[b].name == null){
+          items[b - 1] = items[b-1];
+          items[b] = items[b];
+        }
       }
-      System.out.print("Отсортированный массив: ");
-      listing();
+    }
+    System.out.print("Отсортированный массив: ");
+    listing();
+  }
+  public void searchByName(String name){//метод для поиска заявки по имени
+    for (Item item : items){
+      if (item != null && item.getName().equals(name)){
+        System.out.println(" Name - " + item.getName()+ ", Desc: " +
+        item.getDescription() + ", Id: " + item.getId() + ", data: " + item.getCreate());
+        break;
+      }
     }
   }
-  public void searchByName(){//метод для поиска заявки по имени
-    System.out.println("Введите имя интересующей вас заявки: ");
-    try{
-      BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-      String s = reader.readLine();
-      for (int a = 0; a < items.length; a++){
-        if (items[a]== null ){break;}
-        if(s.equals(items[a].name)){
-          System.out.println(" Name - " + items[a].getName()+ ", Desc: " + items[a].getDescription() + ", Id: " + items[a].getId() + ", data: " +         items[a].getCreate());
-        }
+  public void searchBycreate(long create){//выводит на экран все завки с опр даты
+    for (Item item : items){
+      if (item != null && item.getCreate()> create){
+        System.out.println(" Name - " + item.getName()+ ", Desc: " +
+        item.getDescription() + ", Id: " + item.getId() + ", data: " + item.getCreate());
       }
-    } catch (IOException e){
-        System.out.println("упс");
-      }
-  }
-  public void searchBycreate(){//выводит на экран все завки с опр даты
-    System.out.println("Введите дату с которой пойдет ввывод всех заявок: ");
-    try{
-      BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-      long i= Long.parseLong(reader.readLine());
-      for (int a = 0; a < items.length; a++){
-        if (items[a] == null ){break;}
-        if(i < items[a].create){
-          System.out.println(" Name - " + items[a].getName()+ ", Desc: " + items[a].getDescription() + ", Id: " + items[a].getId() + ", data: " +         items[a].getCreate());
-        }
-      }
-    } catch (IOException e){
-        System.out.println("упс");
-      }
-  }
+    }
+  }    
 }
 
+ 
