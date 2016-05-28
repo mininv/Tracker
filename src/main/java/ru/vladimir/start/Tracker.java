@@ -38,26 +38,34 @@ public class Tracker {
     }    
     return result;
   }
-  public void redact(String id){// метод для редактирования заявки по ее id
+  public void redact(Item itema){// метод для редактирования заявки по ее id
     for (Item item : items){
-      if (item != null && item.getId().equals(id)){
-        item.name = "New new";
-        item.description = "Wot tak";
-        item.create = 11102014;
+      if (item != null && itema.getId().equals(item.getId())){
+        itema.name = "New new";
+        itema.description = "Wot tak";
+        itema.create = 11102014;
         break;
       }
     }
   }
-  public void delete(String id){//метод, удаляющий заявку
-    for (Item item : items){
-      if (item != null && item.getId().equals(id)){
-        item.name = null;
-        item.description = null;
-        item.create = 00000000;
-        item.setId("");
-        break;
+  public Item[] delete(Item itema){//метод, удаляющий заявку
+    int index= 0;
+    int t;
+    Item[] news = new Item[position];
+      for (Item item : items){
+        if ((item != null) && itema.getId().equals(item.getId())) {
+          for(index=index;index<3; index++ ){
+            items[index] = items[index+1];
+            news[index]= items[index];
+          }
+          break;	
+        }
+        else {
+          news[index]= items[index];
+          index++;
+        }
       }
-    }
+    return news;
   }
   public void listing(){//метод для вывода на эклан всех заявок
     int x =1;
@@ -69,7 +77,7 @@ public class Tracker {
        item.getDescription() + ", Id: " + item.getId() + ", data: " + item.getCreate());
     }
   }
-  public void alfavit(){//метод реализующий расстановку по алфавитному принципу
+ /* public void alfavit(){//метод реализующий расстановку по алфавитному принципу
     for (int a = 1; a < this.position; a++){
       for (int b = this.position - 1; b >= a; b--){
         if (items[b - 1].name==null & items[b].name != null){ 
@@ -109,7 +117,7 @@ public class Tracker {
         item.getDescription() + ", Id: " + item.getId() + ", data: " + item.getCreate());
       }
     }
-  }    
+  }  */  
 }
 
  

@@ -14,20 +14,20 @@ public class StartUI{
       System.out.println(item.getId());
     }
     System.out.println();   
-    tracker.redact(one.getId());//редактируем первую заявку
+    tracker.redact(one);//редактируем первую заявку
     System.out.println("Список после редактирования первой заявки: ");
     tracker.listing();// выводим на экран все заявки
     System.out.println();
     System.out.println("Список после удаления второй заявки: ");
-    tracker.delete(two.getId());// удаляем вторую завяку
-    tracker.listing();
-    System.out.println("Список в алфавитном порядке: ");
+    tracker.delete(two);
+ tracker.listing();
+  /* System.out.println("Список в алфавитном порядке: ");
     tracker.alfavit(); // выводим в алфавитном порядке
     System.out.println();
     System.out.println("поиск заявки по имени: ");
     tracker.searchByName(one.getName());//ищем по имени
     System.out.println();
     System.out.println("Список c определенной даты: "); 
-    tracker.searchBycreate(one.getCreate());//выводим с определенной даты
+    tracker.searchBycreate(one.getCreate());//выводим с определенной даты*/
   }
 }
