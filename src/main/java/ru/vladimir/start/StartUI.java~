@@ -15,15 +15,23 @@ public class StartUI{
     }
     System.out.println();   
     one = tracker.redact(one);//редактируем первую заявку
-    System.out.println("Ch one -" + one.name+ " ");
+ System.out.println("Ch one -" + one.name+ " ");
     System.out.println("Список после редактирования первой заявки: ");
     tracker.findBy(null, null, 0);// выводим на экран все заявки
     System.out.println();
     System.out.println("Список после удаления второй заявки: ");
     tracker.delete(two);
-    tracker.findBy(null, null, 0);// выводим на экран все заявки
-    tracker.findBy("Cthree task", null, 0);//ищем по имени
-    //tracker.findBy(null, "aaa", 0);
-    tracker.findBy(null, null, 10112014);//выводим с определенной даты
+ tracker.findBy(null, null, 0);
+ tracker.findBy("Cthree task", null, 0);
+ tracker.findBy(null, "aaa", 0);
+ tracker.findBy(null, null, 10112014);
+  /* System.out.println("Список в алфавитном порядке: ");
+    tracker.alfavit(); // выводим в алфавитном порядке
+    System.out.println();
+    System.out.println("поиск заявки по имени: ");
+    tracker.searchByName(one.getName());//ищем по имени
+    System.out.println();
+    System.out.println("Список c определенной даты: "); 
+    tracker.searchBycreate(one.getCreate());//выводим с определенной даты*/
   }
 }
