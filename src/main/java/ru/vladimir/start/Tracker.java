@@ -10,8 +10,9 @@ import java.lang.ref.Reference;
 
 public class Tracker {
   private Item[] items = new Item[10];
+  private int position = 0;// иницилизаяция поля
   private static final Random RN = new Random();//метод в пакете java.utils.*, static final - указывают на константу
-  Item t;// переменная необходимая для работы метода сортировфки по Алфавитному принципу
+
   
   public Item add(Item item){
     item.setId(this.generateId());
