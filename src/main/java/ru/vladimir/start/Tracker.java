@@ -43,22 +43,28 @@ public class Tracker {
     return result;
   }
   
-  public Item redact(Item itema){// метод для редактирования заявки по ее id
+  public void redact(String id, String newName){// метод для редактирования заявки по ее id
     for (Item item : items){
-      if (item != null && itema.getId().equals(item.getId())){
-        itema.name = "New new";
-        itema.description = "Wot tak";
-        itema.create = 11102014;
+      if (item != null && id.equals(item.getId())){
+        item.name = newName;
         break;
       }
-    }
-    return itema;
+    }   
+  }
+
+  public void addDesc(String id, String newDesc){//Добавление комментария к заявке
+    for (Item item : items){
+      if (item != null && id.equals(item.getId())){
+        item.description = newDesc;
+        break;
+      }
+    }   
   }
   
-  public Item[] delete(Item itema){//метод, удаляющий заявку
+  public void delete(String id){//метод, удаляющий заявку
     int t = 0;  
     for (Item item : items){
-        if ((item != null) && itema.getId().equals(item.getId())) {
+        if ((item != null) && id.equals(item.getId())) {
           for(int i=t; i<this.position; i++ ){
             if(i!=this.position - 1)items[i] = items[i+1];
             else{ 
@@ -70,7 +76,7 @@ public class Tracker {
         }
         t++;
       }
-    return items;
+  
   }
   
   public void findBy(String name, String alf, long create){//метод для вывода на эклан всех заявок
