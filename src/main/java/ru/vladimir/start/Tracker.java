@@ -43,10 +43,12 @@ public class Tracker {
     return result;
   }
   
-  public void redact(String id, String newName){// метод для редактирования заявки по ее id
+  public void redact(String id, String newName, String newDesc, long newCrea){// метод для редактирования заявки по ее id
     for (Item item : items){
       if (item != null && id.equals(item.getId())){
         item.name = newName;
+        item.description = newDesc;
+        item.create = newCrea;
         break;
       }
     }   
@@ -79,38 +81,43 @@ public class Tracker {
   
   }
   
-  public void findBy(String name, String alf, long create){//метод для вывода на эклан всех заявок
-    if(name == null & alf == null & create == 0){//просто вывод всех заявок на экран
-      int x =1;
+  public void allItem(){//метод для вывода на кран всех заявок
+    int x =1;
       for (Item item: items){
         if (item == null){
           break;
         }
         if (item.getId()!= null) System.out.print("Заявка номер: " + x++ +".");System.out.println(" Name - " + item.getName()+ ", Desc: " +
         item.getDescription() + ", Id: " + item.getId() + ", data: " + item.getCreate());
-      }
-    }
-    else if(name != null & alf == null & create == 0){//вывод заявки по имени
-      System.out.println("По имени -");
-      for (Item item : items){
-        if (item != null && item.getName().equals(name)){
-          System.out.println(" Name - " + item.getName()+ ", Desc: " +
-          item.getDescription() + ", Id: " + item.getId() + ", data: " + item.getCreate());
-          break;
-        }
-      }
-    }
-    
-    else if(name == null & alf == null & create != 0){//вывод заявки с опр даты
-      System.out.println("С такой то даты -");
-      for (Item item : items){
-        if (item != null && item.getCreate()> create){
-          System.out.println(" Name - " + item.getName()+ ", Desc: " +
-          item.getDescription() + ", Id: " + item.getId() + ", data: " + item.getCreate());
-        }
-      }
-    }
+     }
   }
+
+  public Item[] alfait(){//метод для вывода на эклан всех заявок в алфавитном порядке
+    for (int a = this.position - 1; a > 0;a--){
+      for ( int b = 0; b < a; b++){
+        if (items[b]!= null & items[b + 1].name.charAt(0) < items[b].name.charAt(0)){
+          Item t = items[b];
+          items[b] = items[b+1];
+          items[b+1] = t;
+        }
+      }  
+    }
+    return items;
+  }
+
+  public Item[] crea(){//метод примененея к массиву фильтра по пронципу с самой ранней даты
+    for (int a = this.position - 1; a > 0;a--){
+      for ( int b = 0; b < a; b++){
+        if (items[b]!= null & items[b + 1].create < items[b].create){
+          Item t = items[b];
+          items[b] = items[b+1];
+          items[b+1] = t;
+        }
+      }  
+    } 
+    return items;
+  }
+
 }
 
  

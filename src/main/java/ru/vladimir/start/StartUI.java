@@ -21,24 +21,27 @@ public class StartUI{
         }
       }
       else if (answer.equals("2")){
-        tracker.findBy(null, null, 0);// выводим на экран все заявки
+        tracker.allItem();// выводим на экран все заявки
         String id = input.ask("Please, Enter id: ");
         String newName = input.ask("Please, Enter new name: ");
-        tracker.redact(id, newName);
+        String newDesc = input.ask("Please, Enter new description: ");
+        String create = input.ask("Please, Enter new create: ");
+        Long newCrea = Long.valueOf(create);
+        tracker.redact(id, newName, newDesc, newCrea);
       }
       else if (answer.equals("3")){
-        tracker.findBy(null, null, 0);// выводим на экран все заявки
+       tracker.allItem();// выводим на экран все заявки
         String id = input.ask("Please, Enter id: ");
         tracker.delete(id);
       }
-      else if (answer.equals("4"))tracker.findBy(null, null, 0);
+      else if (answer.equals("4"))tracker.allItem();
       else if (answer.equals("5")){
-        tracker.findBy(null, null, 0);
-        String name = input.ask("Please, Enter the name: ");
-        tracker.findBy(name, null, 0);
+         String ent = input.ask("Please, select the type of filter list: 1. Alphabetical 2. The lowest date: ");
+         if(ent.equals("1"))tracker.alfait();
+         else tracker.crea();     
       }
       else if (answer.equals("6")){
-        tracker.findBy(null, null, 0);// выводим на экран все заявки
+        tracker.allItem();;// выводим на экран все заявки
         String id = input.ask("Please, Enter id: ");
         String newDesc = input.ask("Please, Enter new desc: ");
         tracker.addDesc(id, newDesc);
