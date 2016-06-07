@@ -1,7 +1,7 @@
 package ru.vladimir.start;
 
 public class Menu{
-  public Menu(){
+  void showMenu(){
     System.out.println(" Меню");
     System.out.println("1. Добавление новой заявки");
     System.out.println("2. Редактирования заявки");
@@ -10,7 +10,7 @@ public class Menu{
     System.out.println("5. Вывод заявки на экран с помощью фильтров");
     System.out.println("6. Добавлять к заявки комментарий");
     System.out.println("7. Выход");
-}
+  }
 }
 
 

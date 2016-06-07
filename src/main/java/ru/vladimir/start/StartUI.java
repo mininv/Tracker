@@ -10,6 +10,7 @@ public class StartUI{
   }
   
   public void init() {
+    menu.showMenu();
     boolean bo = true;    
     do{
       String answer = input.ask("Please, Enter the number of the selected category: ");
