@@ -12,7 +12,7 @@ public class Tracker {
   private Item[] items = new Item[10];
   private int position = 0;// иницилизаяция поля
   private static final Random RN = new Random();//метод в пакете java.utils.*, static final - указывают на константу
-
+  int rage=9999;
   
   public Item add(Item item){
     item.setId(this.generateId());
@@ -32,7 +32,7 @@ public class Tracker {
   }
   
   String generateId(){
-    return String.valueOf(System.currentTimeMillis() + RN.nextInt());//String.valueof преобразует Integer в строку
+    return String.valueOf(1000+RN.nextInt(rage-1000));//String.valueof преобразует Integer в строку
   }
   
   public Item[] getAll(){
@@ -66,30 +66,28 @@ public class Tracker {
   public void delete(String id){//метод, удаляющий заявку
     int t = 0;  
     for (Item item : items){
-        if ((item != null) && id.equals(item.getId())) {
-          for(int i=t; i<this.position; i++ ){
-            if(i!=this.position - 1)items[i] = items[i+1];
-            else{ 
-              items[i]= null;
-              this.position--;
-            }
+      if ((item != null) && id.equals(item.getId())) {
+        for(int i=t; i<this.position; i++ ){
+          if(i!=this.position - 1)items[i] = items[i+1];
+          else{ 
+            items[i]= null;
+            this.position--;
           }
-          break;	
         }
-        t++;
+        break;	
       }
-  
+      t++;
+    }  
   }
   
-  public void allItem(){//метод для вывода на кран всех заявок
-    int x =1;
-      for (Item item: items){
-        if (item == null){
-          break;
-        }
-        if (item.getId()!= null) System.out.print("Заявка номер: " + x++ +".");System.out.println(" Name - " + item.getName()+ ", Desc: " +
-        item.getDescription() + ", Id: " + item.getId() + ", data: " + item.getCreate());
-     }
+   
+  public void edit(Item fresh){
+    for (Item item: items){
+      if (item!=null && item.getId().equals(fresh.getId())){
+        item = fresh;
+        break;
+      }
+    }
   }
 
   public Item[] alfait(){//метод для вывода на эклан всех заявок в алфавитном порядке
