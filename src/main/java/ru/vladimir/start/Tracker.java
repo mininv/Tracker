@@ -10,9 +10,13 @@ import java.lang.ref.Reference;
 
 public class Tracker {
   private Item[] items = new Item[10];
-  private int position = 0;// иницилизаяция поля
-  private static final Random RN = new Random();//метод в пакете java.utils.*, static final - указывают на константу
-  int rage=9999;
+  // иницилизаяция поля
+  private int position = 0;
+  //метод в пакете java.utils.*, static final - указывают на константу
+  private static final Random RN = new Random();
+  int rage=9999;//для 4х значного id
+  private Comment[] comments = new Comment[10];
+  private int pos = 0;
   
   public Item add(Item item){
     item.setId(this.generateId());
@@ -32,38 +36,31 @@ public class Tracker {
   }
   
   String generateId(){
-    return String.valueOf(1000+RN.nextInt(rage-1000));//String.valueof преобразует Integer в строку
+    //String.valueof преобразует Integer в строку
+    return String.valueOf(1000+RN.nextInt(rage-1000));
   }
   
   public Item[] getAll(){
-    Item[] result = new Item[this.position];//массив объектов, для тех элементов которые мы вставили
+    //массив объектов, для тех элементов которые мы вставили 
+    Item[] result = new Item[this.position];
     for (int index = 0; index != this.position; index++){
       result[index] = this.items[index];
     }    
     return result;
   }
   
-  public void redact(String id, String newName, String newDesc, long newCrea){// метод для редактирования заявки по ее id
-    for (Item item : items){
-      if (item != null && id.equals(item.getId())){
-        item.name = newName;
-        item.description = newDesc;
-        item.create = newCrea;
-        break;
-      }
-    }   
-  }
 
-  public void addDesc(String id, String newDesc){//Добавление комментария к заявке
+//Добавление комментария к заявке
+  public void addComment(String id, String comment){
     for (Item item : items){
       if (item != null && id.equals(item.getId())){
-        item.description = newDesc;
+        this.comments[pos++] = new Comment(comment);
         break;
       }
     }   
   }
-  
-  public void delete(String id){//метод, удаляющий заявку
+//метод, удаляющий заявку  
+  public void delete(String id){
     int t = 0;  
     for (Item item : items){
       if ((item != null) && id.equals(item.getId())) {
@@ -80,17 +77,19 @@ public class Tracker {
     }  
   }
   
-   
+// метод для редактирования заявки по ее id
   public void edit(Item fresh){
     for (Item item: items){
       if (item!=null && item.getId().equals(fresh.getId())){
-        item = fresh;
+        item.name = fresh.name;
+        item.description = fresh.description;
+        item.create = fresh.create;
         break;
       }
     }
   }
-
-  public Item[] alfait(){//метод для вывода на эклан всех заявок в алфавитном порядке
+//метод для вывода на эклан всех заявок в алфавитном порядке
+  public Item[] alfait(){
     for (int a = this.position - 1; a > 0;a--){
       for ( int b = 0; b < a; b++){
         if (items[b]!= null & items[b + 1].name.charAt(0) < items[b].name.charAt(0)){
@@ -102,8 +101,8 @@ public class Tracker {
     }
     return items;
   }
-
-  public Item[] crea(){//метод примененея к массиву фильтра по пронципу с самой ранней даты
+//метод примененея к массиву фильтра по пронципу с самой ранней даты
+  public Item[] crea(){
     for (int a = this.position - 1; a > 0;a--){
       for ( int b = 0; b < a; b++){
         if (items[b]!= null & items[b + 1].create < items[b].create){
@@ -115,7 +114,6 @@ public class Tracker {
     } 
     return items;
   }
-
 }
 
  

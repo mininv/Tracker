@@ -12,7 +12,9 @@ class EditItem implements UserAction{//внешний класс
      String newDesc = input.ask("Please, Enter new description: ");
      String create = input.ask("Please, Enter new create: ");
      Long newCrea = Long.valueOf(create);
-     tracker.redact(id, newName, newDesc, newCrea);
+     Item fresh = new Item(newName, newDesc, newCrea);
+     fresh.setId(id);
+     tracker.edit(fresh);
   }
 
   public String info(){
@@ -27,7 +29,7 @@ class DeleteItem implements UserAction{//внешний класс
  
   public void execute(Input input, Tracker tracker){
      String id = input.ask("Please, Enter id: ");
-        tracker.delete(id);
+     tracker.delete(id);
   }
 
   public String info(){
@@ -58,12 +60,12 @@ class DescIt implements UserAction{//внешний класс
  
   public void execute(Input input, Tracker tracker){
     String id = input.ask("Please, Enter id: ");
-    String newDesc = input.ask("Please, Enter new desc: ");
-    tracker.addDesc(id, newDesc);
+    String comment = input.ask("Please, Enter the comment: ");
+    tracker.addComment(id, comment);
   }
 
   public String info(){
-    return String.format("%s. %s", this.key(), "Add the new decription for item. ");
+    return String.format("%s. %s", this.key(), "Add the comment for item. ");
   }
 }
 
