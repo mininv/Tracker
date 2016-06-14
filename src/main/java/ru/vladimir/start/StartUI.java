@@ -3,6 +3,8 @@ import ru.vladimir.models.*;
 
 public class StartUI{
   private Input input;
+// range для бесперебойной работы приложения через ValidateInput
+  private int[] range = {0,1,2,3,4,5};
  
   public StartUI(Input input){
     this.input = input;
@@ -14,13 +16,14 @@ public class StartUI{
     menu.fillActions();
     do{
       menu.show();
-      int key = Integer.valueOf(input.ask("Select: "));
+//ask переопределен с добавлением аргумента range
+      int key = Integer.valueOf(input.ask("Select: ",range));
       menu.select(key);
     } while(!"y".equals(this.input.ask("Exit?(y): ")));
   }
   
   public static void main(String[] args){
-    Input input = new ConsoleInput();
+    Input input = new ValidateInput();
     new StartUI(input).init();
   }
 }
