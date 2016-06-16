@@ -1,7 +1,11 @@
 package ru.vladimir.start;
 import ru.vladimir.models.*; 
+import ru.vladimir.templates.*;
 
-class EditItem implements UserAction{//внешний класс
+class EditItem extends BaseAction{//внешний класс
+   public EditItem(String name) {
+            super(name);
+        }
   public int key(){
       return 2;
   }
@@ -17,12 +21,14 @@ class EditItem implements UserAction{//внешний класс
      tracker.edit(fresh);
   }
 
-  public String info(){
-    return String.format("%s. %s", this.key(), "Add the change items fields. ");
-  }
+  public String info(){return super.info();};
+  
 }
 
-class DeleteItem implements UserAction{//внешний класс
+class DeleteItem extends BaseAction{//внешний класс
+  public DeleteItem(String name) {
+            super(name);
+        }
   public int key(){
       return 3;
   }
@@ -32,12 +38,14 @@ class DeleteItem implements UserAction{//внешний класс
      tracker.delete(id);
   }
 
-  public String info(){
-    return String.format("%s. %s", this.key(), "Delete item by id. ");
-  }
+    public String info(){return super.info();};
 }
 
-class FiltItem implements UserAction{//внешний класс
+class FiltItem extends BaseAction{//внешний класс
+ 
+  public FiltItem(String name) {
+    super(name);
+  }  
   public int key(){
       return 4;
   }
@@ -48,12 +56,13 @@ class FiltItem implements UserAction{//внешний класс
        else tracker.crea();     
   }
 
-  public String info(){
-    return String.format("%s. %s", this.key(), "Filters for applications. ");
-  }
+   public String info(){return super.info();};
 }
 
-class DescIt implements UserAction{//внешний класс
+class DescIt extends BaseAction{//внешний класс
+  public DescIt(String name) {
+    super(name);
+  }  
   public int key(){
       return 5;
   }
@@ -64,30 +73,36 @@ class DescIt implements UserAction{//внешний класс
     tracker.addComment(id, comment);
   }
 
-  public String info(){
-    return String.format("%s. %s", this.key(), "Add the comment for item. ");
-  }
+   public String info(){return super.info();};
 }
 
 public class MenuTracker{
 
   private Input input;//Объекты из вне, кторые используются
   private Tracker tracker;//в нашей программе - Ввод, выывод и Хранилище
-  private UserAction[] actions = new UserAction[6];//действия которые описанны в системе
-
+  private UserAction[] actions = new UserAction[7];//действия которые описанны в системе
+  private int position = 0;  
+ 
   public MenuTracker(Input input, Tracker tracker){
     this.input = input;
     this.tracker = tracker;
   }  
   public void fillActions(){
-    this.actions[0] = this.new AddItem();//вложенный не стат класс через объект класса
-    this.actions[1] = new MenuTracker.ShowItem();//вложенный стат классу через класс 
-    this.actions[2] = new EditItem();//не вложенный обращение к внешний класс
-    this.actions[3] = new DeleteItem();
-    this.actions[4] = new FiltItem();
-    this.actions[5] = new DescIt();
+//вложенный не стат класс через объект класса
+    this.actions[position++] = this.new AddItem("Add the new item. ");
+//вложенный стат классу через класс  
+    this.actions[position++] = new MenuTracker.ShowItem("Show all items. ");
+//не вложенный обращение к внешний класс
+    this.actions[position++] = new EditItem("Add the change items fields. ");
+    this.actions[3] = new DeleteItem("Delete item by id. ");
+    this.actions[4] = new FiltItem("Filters for applications. ");
+    this.actions[5] = new DescIt("Add the comment for item. ");
   }  
-
+  
+  /*public void addAction(UserAction action){
+    this.actions[position++] = action;
+  }
+ */
   public void select(int key){
     this.actions[key].execute(this.input, this.tracker);
   }
@@ -100,7 +115,10 @@ public class MenuTracker{
     }
   }  
 
-  private class AddItem implements UserAction{// внутрений класс 
+  private class AddItem extends BaseAction{// внутрений класс 
+    public AddItem(String name) {
+      super(name);
+    }  
     public int key(){
       return 0;
     }
@@ -111,12 +129,13 @@ public class MenuTracker{
       tracker.add(new Task(name, desc));
     }
 
-    public String info(){
-      return String.format("%s. %s", this.key(), "Add the new item. ");
-    }
+     public String info(){return super.info();};
   }
 
-  private static class ShowItem implements UserAction{// внутрений статический класс 
+  private static class ShowItem extends BaseAction{// внутрений статический класс 
+    public ShowItem(String name) {
+      super(name);
+    }   
     public int key(){
       return 1;
     }
@@ -127,9 +146,7 @@ public class MenuTracker{
       }
     }
 
-    public String info(){
-      return String.format("%s. %s ", this.key(), "Show all items. ");
-    }
+      public String info(){return super.info();};
   }
 
 }
