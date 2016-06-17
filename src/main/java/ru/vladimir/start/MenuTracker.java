@@ -99,10 +99,7 @@ public class MenuTracker{
     this.actions[5] = new DescIt("Add the comment for item. ");
   }  
   
-  /*public void addAction(UserAction action){
-    this.actions[position++] = action;
-  }
- */
+
   public void select(int key){
     this.actions[key].execute(this.input, this.tracker);
   }

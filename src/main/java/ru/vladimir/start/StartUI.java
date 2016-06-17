@@ -15,18 +15,7 @@ public class StartUI{
     MenuTracker menu = new MenuTracker(this.input, tracker);
     menu.fillActions();
 //анонимный класс, далее создан объкт анонимного класса
-  /*  UserAction deleteAction = new UserAction() {
-      public int key(){
-        return 3;
-      }
-      public void execute(Input input, Tracker tracker){
-        //todo
-      }
-      public String info(){
-        return "Delete";
-      }
-    };
-    menu.addAction(deleteAction);*/
+ 
     do{
       menu.show();
 //ask переопределен с добавлением аргумента range

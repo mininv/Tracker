@@ -1,9 +1,10 @@
 package ru.vladimir.start;
 
 public interface UserAction{
-  int key();// запрашиваем действие ключ действия пользователя 
-  
-  void execute(Input input, Tracker tracker);//запрашивать действие
+// запрашиваем действие ключ действия пользователя   
+  int key();
+//запрашивать действие  
+  void execute(Input input, Tracker tracker);
 
   String info();
 }
