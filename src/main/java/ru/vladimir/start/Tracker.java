@@ -114,6 +114,16 @@ public class Tracker {
     } 
     return items;
   }
+  
+  public void filterByName(String word){
+ 
+    for (Item item: items){
+      if (item!=null && item.getName().equals(word)){
+        System.out.println(String.format("id- %s, name- %s, desc- %s.", item.getId(), item.getName() , item.getDescription()));
+      }
+    }
+  }
+
 }
 
  

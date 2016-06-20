@@ -4,7 +4,7 @@ import ru.vladimir.models.*;
 public class StartUI{
   private Input input;
 // range для бесперебойной работы приложения через ValidateInput
-  private int[] range = {0,1,2,3,4,5};
+  private int[] range = {0,1,2,3,4,5,6};
  
   public StartUI(Input input){
     this.input = input;
@@ -19,7 +19,7 @@ public class StartUI{
     do{
       menu.show();
 //ask переопределен с добавлением аргумента range
-      int key = Integer.valueOf(input.ask("Select: ",range));
+      int key = input.ask("Select: ",range);
       menu.select(key);
     } while(!"y".equals(this.input.ask("Exit?(y): ")));
   }

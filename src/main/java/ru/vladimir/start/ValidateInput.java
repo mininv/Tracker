@@ -9,7 +9,6 @@ public class ValidateInput extends ConsoleInput{
         value = super.ask(question, range);//родительский конструтор метода ask
         invalid = false;
       }catch(MenuOutException moe){
-         moe.printStackTrace();
          System.out.println("Please select key from menu. ");
        }
       catch(NumberFormatException nfe){

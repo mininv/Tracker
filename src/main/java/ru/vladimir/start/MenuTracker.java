@@ -21,7 +21,7 @@ class EditItem extends BaseAction{//внешний класс
      tracker.edit(fresh);
   }
 
-  public String info(){return super.info();};
+
   
 }
 
@@ -38,7 +38,6 @@ class DeleteItem extends BaseAction{//внешний класс
      tracker.delete(id);
   }
 
-    public String info(){return super.info();};
 }
 
 class FiltItem extends BaseAction{//внешний класс
@@ -51,12 +50,14 @@ class FiltItem extends BaseAction{//внешний класс
   }
  
   public void execute(Input input, Tracker tracker){
-     String ent = input.ask("Please, select the type of filter list: 1. Alphabetical 2. The lowest date: ");
+     String ent = input.ask("Please, select the type of sorting: 1. Alphabetical 2. be The lowest date: ");
        if(ent.equals("1"))tracker.alfait();
-       else tracker.crea();     
+       else tracker.crea();
+       for (Item item : tracker.getAll()){
+        System.out.println(String.format("id- %s, name- %s, desc- %s.", item.getId(), item.getName() , item.getDescription()));
+      }    
   }
 
-   public String info(){return super.info();};
 }
 
 class DescIt extends BaseAction{//внешний класс
@@ -73,7 +74,20 @@ class DescIt extends BaseAction{//внешний класс
     tracker.addComment(id, comment);
   }
 
-   public String info(){return super.info();};
+}
+class Filter extends BaseAction{//внешний класс
+  public Filter(String name) {
+    super(name);
+  }  
+  public int key(){
+      return 6;
+  }
+ 
+  public void execute(Input input, Tracker tracker){
+    String word = input.ask("Please, Enter name: ");
+    tracker.filterByName(word);
+  }
+
 }
 
 public class MenuTracker{
@@ -94,9 +108,10 @@ public class MenuTracker{
     this.actions[position++] = new MenuTracker.ShowItem("Show all items. ");
 //не вложенный обращение к внешний класс
     this.actions[position++] = new EditItem("Add the change items fields. ");
-    this.actions[3] = new DeleteItem("Delete item by id. ");
-    this.actions[4] = new FiltItem("Filters for applications. ");
-    this.actions[5] = new DescIt("Add the comment for item. ");
+    this.actions[position++] = new DeleteItem("Delete item by id. ");
+    this.actions[position++] = new FiltItem("Sorting for applications. ");
+    this.actions[position++] = new DescIt("Add the comment for item. ");
+    this.actions[position++] = new Filter("Filter for items. ");
   }  
   
 
@@ -126,7 +141,6 @@ public class MenuTracker{
       tracker.add(new Task(name, desc));
     }
 
-     public String info(){return super.info();};
   }
 
   private static class ShowItem extends BaseAction{// внутрений статический класс 
@@ -143,7 +157,6 @@ public class MenuTracker{
       }
     }
 
-      public String info(){return super.info();};
   }
 
 }
